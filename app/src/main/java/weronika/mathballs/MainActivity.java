@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         SensorManager sensor=(SensorManager) getSystemService(SENSOR_SERVICE);
         sensor.registerListener(this, sensor.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         setContentView(new Gra(this));
-
+        // TODO - fullscreen, blokowanie obracania
     }
 
     @Override

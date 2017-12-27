@@ -2,6 +2,7 @@ package weronika.mathballs;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 
 public class Koszyk {
 
@@ -18,6 +19,10 @@ public class Koszyk {
         x=((MainActivity.szerokosc)/2)-(szerokosc/2);
         y=(MainActivity.wysokosc)*3/4;
 
+    }
+
+    public Rect pobierz_prostokat(){
+        return new Rect((int)x, (int)(y+wysokosc*0.4), (int)(x+szerokosc), (int)(y+wysokosc));
     }
 
     public void update(){
