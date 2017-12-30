@@ -17,7 +17,7 @@ public class Koszyk {
         szerokosc=grafika.getWidth();
         wysokosc=grafika.getHeight();
         x=((MainActivity.szerokosc)/2)-(szerokosc/2);
-        y=(MainActivity.wysokosc)*3/4;
+        y=(MainActivity.wysokosc)*7/8;
 
     }
 

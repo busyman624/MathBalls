@@ -40,6 +40,7 @@ public class Petla extends Thread{
                     this.gra.draw(canvas);
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
             finally{
                 if(canvas!=null)

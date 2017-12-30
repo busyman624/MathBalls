@@ -17,27 +17,41 @@ public class Kulka {
     float wysokosc;
     boolean czy_bomba=false;
     int punkty;
+    boolean czy_bonus=false;
 
 
 
-    public Kulka(ArrayList<Bitmap> kulki){
+    public Kulka(ArrayList<Bitmap> grafiki_kulek, int licznik_kulek){
         random=new Random();
-        int indeks=random.nextInt(kulki.size());
-        grafika=kulki.get(indeks);
+        int indeks=random.nextInt(grafiki_kulek.size());
+        grafika=grafiki_kulek.get(indeks);
         switch(indeks){
             case 0:
-                punkty=5;
+                punkty=20;
                 break;
             case 1:
                 punkty=10;
                 break;
             case 2:
-                punkty=15;
+                punkty=30;
                 break;
             case 3:
                 punkty=0;
                 czy_bomba=true;
                 break;
+            case 4:
+                punkty=20;
+                break;
+            case 5:
+                punkty=10;
+                break;
+            case 6:
+                punkty=30;
+                break;
+        }
+
+        if(licznik_kulek%5==0){
+            czy_bonus=true;
         }
 
         szerokosc=grafika.getWidth();
@@ -51,8 +65,8 @@ public class Kulka {
         return new Rect((int)x, (int)y, (int)(x+szerokosc), (int)(y+wysokosc));
     }
 
-    public void update(){
-        y=y+7;
+    public void update(int poziom){
+        y=y+6+poziom/3;
     }
 
     public void draw(Canvas canvas){
