@@ -10,11 +10,21 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+/**
+ * Aktywność wyświetlająca menu początkowe.
+ * Uruchamiana przy starcie aplikacji.
+ */
 public class MenuActivity extends Activity {
-
-    ImageView mathballs;
+    /**
+     * Przycisk do rozpoczęcia gry.
+     */
     ImageButton start;
 
+    /**
+     * Metoda uruchamiana przy starcie aplikacji.
+     * Inicjalizuje cały widok.
+     * @param savedInstanceState nieużywany
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -23,11 +33,15 @@ public class MenuActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.menu_activity);
         start=(ImageButton)findViewById(R.id.start);
         start.setOnClickListener(new PrzyciskStart());
     }
 
+    /**
+     * Klasa obsługująca wciśnięcie przycisku "start".
+     */
     public class PrzyciskStart implements View.OnClickListener{
 
         @Override

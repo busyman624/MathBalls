@@ -18,23 +18,74 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Klasa, w której rysowane i aktualizowane s? wszystkie elementy gry.
+ * Zawarta jest tu logika gry.
+ */
 public class Gra extends SurfaceView implements SurfaceHolder.Callback {
 
+    /**
+     * Obiekt typu Petla, w którym zawiera si? g?ówny w?tek gry.
+     */
     public Petla petla;
+    /**
+     * Obiekt typu Tlo, stanowiacy tlo gry.
+     */
     public Tlo tlo;
+    /**
+     * Obiekt typu koszyk, którym porusza gracz.
+     */
     public Koszyk koszyk;
+    /**
+     * Lista wszystkich kulek obecnych w grze.
+     */
     public ArrayList<Kulka> kulki;
+    /**
+     * Lista obrazków kulek i bomb.
+     */
     public ArrayList<Bitmap> grafiki_kulek;
+    /**
+     * Obiekt typu Timer.
+     */
     public Timer timer=new Timer();
+    /**
+     * Obiekt typu Random.
+     */
     public Random random=new Random();
+    /**
+     * Zmienna przechowuj?ca ilo?? punktów gracza.
+     */
     static int punkty;
+    /**
+     * Zmienna przechowuj?ca aktualny poziom.
+     */
     static int poziom;
+    /**
+     * Styl t?a obiektów GUI.
+     */
     Paint prostokaty;
+    /**
+     * Styl tekstu obiektów GUI.
+     */
     Paint tekst;
+    /**
+     * Zmienna przechowuj?ca ilo?? z?apanych bomb.
+     */
     int licznik_bomb=0;
+    /**
+     * Zmienna zliczaj?ca stworzone kulki.
+     */
     int licznik_kulek=0;
+    /**
+     * Obiekt typu MainActivity, s?u??cy otwieraniu nowych aktywno?ci.
+     */
     public MainActivity aktywnosc;
 
+    /**
+     * Konstruktor klasy Gra. Inicjalizuje wszystkie elementy gry.
+     * @param mainActivity wykorzystywany do wywolania konstruktora nadklasy
+     *                     i otwierania innych aktywno?ci
+     */
     public Gra(MainActivity mainActivity){
         super(mainActivity);
         getHolder().addCallback(this);
@@ -45,6 +96,7 @@ public class Gra extends SurfaceView implements SurfaceHolder.Callback {
         koszyk=new Koszyk(BitmapFactory.decodeResource(getResources(), R.drawable.basket));
         kulki=new ArrayList<>();
         grafiki_kulek =new ArrayList<>();
+        // dwa razy dodawane te same kulki aby zmniejszy? prawdopodobie?stwo wylosowania bobmy
         grafiki_kulek.add(BitmapFactory.decodeResource(getResources(), R.drawable.fioletowa));
         grafiki_kulek.add(BitmapFactory.decodeResource(getResources(), R.drawable.pomaranczowa));
         grafiki_kulek.add(BitmapFactory.decodeResource(getResources(), R.drawable.mietowa));
@@ -60,6 +112,12 @@ public class Gra extends SurfaceView implements SurfaceHolder.Callback {
         aktywnosc=mainActivity;
     }
 
+    /**
+     * Metoda, w której aktualizowane jest po?o?enie wszystkich elementów,
+     * usuwanie ich po zderzeniu z koszykiem lub wyj?ciu poza ekran.
+     * Aktualizowane s? tak?e elementy GUI.
+     * Gra jest ko?czona po zebraniu 3 bomb.
+     */
     public void update(){
         koszyk.update();
         for(int i=0; i<kulki.size(); i++) {
@@ -91,6 +149,10 @@ public class Gra extends SurfaceView implements SurfaceHolder.Callback {
         poziom=punkty/100+1;
     }
 
+    /**
+     * Metoda rysuj?ca wszystkie elementy gry oraz GUI.
+     * @param canvas p?ótno, na którym s? rysowane elementy gry i GUI.
+     */
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
@@ -102,8 +164,8 @@ public class Gra extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.prostokat), 0.05f*MainActivity.szerokosc,
                 0.025f*MainActivity.wysokosc, null);
         canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.prostokat), 0.53f*MainActivity.szerokosc, 0.025f*MainActivity.wysokosc, null);
-        canvas.drawText(""+punkty,0.66f*MainActivity.szerokosc ,0.075f*MainActivity.wysokosc, tekst);
-        canvas.drawText("Poziom: "+poziom, 0.08f*MainActivity.szerokosc, 0.075f*MainActivity.wysokosc, tekst);
+        canvas.drawText(""+punkty,0.7f*MainActivity.szerokosc ,0.09f*MainActivity.wysokosc, tekst);
+        canvas.drawText("Poziom: "+poziom, 0.09f*MainActivity.szerokosc, 0.09f*MainActivity.wysokosc, tekst);
         for(int i=0; i<licznik_bomb; i++){
             canvas.drawBitmap(Bitmap.createScaledBitmap(grafiki_kulek.get(3), grafiki_kulek.get(3).getWidth()/2, grafiki_kulek.get(3).getHeight()/2, true),
                     0.05f*MainActivity.szerokosc+i*grafiki_kulek.get(3).getWidth()/2, 0.11f*MainActivity.wysokosc, null);
@@ -111,14 +173,22 @@ public class Gra extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    /**
+     * Metoda tworz?ca i inicjalizuj?ca w?tek oraz timer.
+     * @param holder uchwyt do powierzchni
+     */
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        petla=new Petla(this, getHolder());
+        petla=new Petla(this, holder);
         petla.start();
         timer=new Timer();
         timer.schedule(new ListenToTimer(), random.nextInt(3000)+1000);
     }
 
+    /**
+     * Klasa odpowiadaj?ca za obs?ug? zdarze? timera.
+     * Wykorzystywana do dodawania nowych kulek co losowy czas.
+     */
     public class ListenToTimer extends TimerTask {
 
         @Override
@@ -135,13 +205,17 @@ public class Gra extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    /**
+     * Metoda zatrzymuj?ca w?tek w momencie zniszczenia powierzchni.
+     * @param holder niu?ywany
+     */
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        boolean retry = true;
-        while(retry) {
+        boolean ponow = true;
+        while(ponow) {
             try{petla.dziala=false;
                 petla.join();
-                retry = false;
+                ponow = false;
             }catch(InterruptedException e){e.printStackTrace();}
         }
 

@@ -10,12 +10,29 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+/**
+ * Aktywność wyświetlająca informacje o przegranej i menu umożliwiające zakończenie
+ * lub ponowne rozpoczęcie gry.Uruchamiana z klasy Gra w momencie, gdy ilość bomb jest równa 3.
+ */
 public class PrzegranaActivity extends Activity {
-
+    /**
+     * Pole wyświetlające ilość punktów zdobytą przez użytkownika.
+     */
     TextView punkty_koncowe;
+    /**
+     * Przycisk zamykający aplikację.
+     */
     ImageButton koniec;
+    /**
+     * Przycisk ponownego rozpoczęcia gry.
+     */
     ImageButton graj;
 
+    /**
+     * Metoda uruchamiana przy starcie aktywności.
+     * Inicjalizuje cały widok.
+     * @param savedInstanceState nieużywany
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -24,6 +41,7 @@ public class PrzegranaActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.przegrana_activity);
         punkty_koncowe=(TextView)findViewById(R.id.punkty_koncowe);
         punkty_koncowe.setText("Punkty: "+Gra.punkty);
@@ -33,6 +51,9 @@ public class PrzegranaActivity extends Activity {
         graj.setOnClickListener(new PrzyciskGraj());
     }
 
+    /**
+     * Klasa obsługująca wciśnięcie przycisku "koniec".
+     */
     private class PrzyciskKoniec implements View.OnClickListener{
 
         @Override
@@ -41,6 +62,9 @@ public class PrzegranaActivity extends Activity {
         }
     }
 
+    /**
+     * Klasa obsługująca wciśnięcie przycisku "graj"
+     */
     private class PrzyciskGraj implements View.OnClickListener{
 
         @Override

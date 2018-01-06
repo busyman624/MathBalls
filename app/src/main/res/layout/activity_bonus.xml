@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/tlo">
+    android:background="@drawable/tlo1">
 
 
 
@@ -11,10 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/gwiazda"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="20dp"/>
 
     <TextView
         android:id="@+id/pytanie"
+        android:textStyle="bold"
+        android:textSize="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"/>
@@ -27,21 +29,29 @@
 
     <Button
         android:id="@+id/przycisk1"
-        android:layout_width="13s0dp"
-        android:layout_height="70dp" />
+        android:textSize="25dp"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/przycisk2"
+        android:textSize="25dp"
         android:layout_width="130dp"
-        android:layout_height="70dp" />
+        android:layout_height="70dp"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/przycisk3"
+        android:textSize="25dp"
         android:layout_width="130dp"
-        android:layout_height="70dp" />
+        android:layout_height="70dp"
+        android:layout_marginRight="15dp"/>
 
     <Button
         android:id="@+id/przycisk4"
+        android:textSize="25dp"
         android:layout_width="130dp"
         android:layout_height="70dp" />
     </GridLayout>

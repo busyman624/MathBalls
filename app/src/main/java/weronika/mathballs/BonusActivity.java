@@ -12,11 +12,25 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Aktywność, która wyświetla widok z bonusem (pytanie + 4 odpowiedzi).
+ * Uruchamiana z klasy gra.
+ */
 public class BonusActivity extends Activity {
-
+    /**
+     * Pole, w którym ustawiany jest tekst pytania.
+     */
     TextView pytanie;
+    /**
+     * Lista z przyciskami odpowiedzi.
+     */
     ArrayList<Button> przyciski=new ArrayList<>();
 
+    /**
+     * Metoda uruchamiana przy starcie aktywności.
+     * Inicjalizuje cały widok.
+     * @param savedInstanceState nieużywany
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -25,6 +39,7 @@ public class BonusActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_bonus);
         pytanie=(TextView) findViewById(R.id.pytanie);
         przyciski.add((Button) findViewById(R.id.przycisk1));
@@ -39,7 +54,10 @@ public class BonusActivity extends Activity {
         int numer_wyniku=random.nextInt(4);
         int zakres_wyniku;
 
-        switch(Gra.poziom/5){
+        // switch, w którym wybierane są dwie losowe liczby będące czynnikami działania
+        // oraz ustawiany jest zakres liczb, z których ma być losowany błędny wynik
+        // w zależności od poziomu gry
+        switch(Gra.poziom/4){
             case 0:
                 x=random.nextInt(5);
                 y=random.nextInt(5);
@@ -62,20 +80,29 @@ public class BonusActivity extends Activity {
                 break;
         }
         wynik=x*y;
-        tekst_pytania=x + "x" + y + "=";
+        tekst_pytania=x + " x " + y + " = ";
         pytanie.setText(tekst_pytania);
+
+        // pętla, w której jedna poprawna odpowiedź i trzy błędne są przypisywane do losowych przycisków
         for(int i=0; i<przyciski.size(); i++){
             if(i==numer_wyniku){
                 przyciski.get(i).setText(""+wynik);
                 przyciski.get(i).setOnClickListener(new PrawidlowaOdpowiedz());
             }
             else{
-                przyciski.get(i).setText(""+random.nextInt(zakres_wyniku));
+                int odpowiedz=random.nextInt(zakres_wyniku);
+                while(wynik==odpowiedz){
+                    odpowiedz=random.nextInt(zakres_wyniku);
+                }
+                przyciski.get(i).setText(""+odpowiedz);
                 przyciski.get(i).setOnClickListener(new ZlaOdpowiedz());
-                // TODO - wyeliminowac wylosowanie wyniku
             }
         }
     }
+
+    /**
+     * klasa odpowiadająca za obsługę wciśnięcia przycisku z poprawną odpowiedzią
+     */
     private class PrawidlowaOdpowiedz implements View.OnClickListener{
 
         @Override
@@ -84,6 +111,10 @@ public class BonusActivity extends Activity {
             finish();
         }
     }
+
+    /**
+     * klasa odpowiadająca za obsługę wciśnięcia przycisku z błędną odpowiedzią
+     */
     private class ZlaOdpowiedz implements View.OnClickListener{
 
         @Override

@@ -5,16 +5,24 @@
     android:gravity="center"
     android:background="@drawable/tlo1">
 
+
     <ImageView
         android:id="@+id/mathballs"
+        android:src="@drawable/mathballs"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"/>
 
     <ImageButton
         android:id="@+id/start"
         android:background="@android:color/transparent"
-        android:src="@drawable/prostokat"
+        android:src="@drawable/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"/>
+
+    <ImageView
+        android:src="@drawable/ozdoba"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
 </LinearLayout>

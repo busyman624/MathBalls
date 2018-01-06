@@ -5,15 +5,25 @@
     android:background="@drawable/tlo1"
     android:gravity="center">
 
-    <TextView
+    <ImageView
+        android:src="@drawable/emotikon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:src="@drawable/przegrana"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PRZEGRANA :("/>
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"/>
+
     <TextView
         android:id="@+id/punkty_koncowe"
+        android:textSize="30dp"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"/>
+        android:layout_marginBottom="140dp"/>
 
     <GridLayout
         android:layout_width="wrap_content"
@@ -23,12 +33,16 @@
 
     <ImageButton
         android:id="@+id/koniec"
+        android:background="@android:color/transparent"
+        android:src="@drawable/koniec"
         android:layout_width="150dp"
         android:layout_height="70dp"
-        android:layout_marginRight="50dp"/>
+        android:layout_marginRight="10dp"/>
 
     <ImageButton
         android:id="@+id/graj"
+        android:background="@android:color/transparent"
+        android:src="@drawable/graj"
         android:layout_width="150dp"
         android:layout_height="70dp" />
 

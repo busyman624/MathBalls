@@ -14,13 +14,29 @@ import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 
+/**
+ * Główna aktywność, w której wyświetlany jest przebieg gry.
+ * Uruchamiana z aktywności MenuActivity.
+ */
 public class MainActivity extends Activity implements SensorEventListener {
-
+    /**
+     * Szerokość ekranu.
+     */
     static float szerokosc;
+    /**
+     * Wysokość ekranu.
+     */
     static float wysokosc;
+    /**
+     * Wartość składowej siły odczytanej przez akcelerometr.
+     */
     static float akcelerometr;
 
-
+    /**
+     * Metoda uruchamiana przy rozpoczęciu gry.
+     * Ustawiany jest widok na nowy obiekt klasy Gra.
+     * @param savedInstanceState nieużywany
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +51,15 @@ public class MainActivity extends Activity implements SensorEventListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(new Gra(this));
     }
 
+    /**
+     * Metoda uruchamiana przy każdym odczycie z akcelerometru.
+     * Aktualizuje wartość pola akcelerometr.
+     * @param event wykorzystywany do przekazania danych z akcelerometru do metody
+     */
     @Override
     public void onSensorChanged(SensorEvent event) {
         akcelerometr=(event.values[0])*1.8f;
@@ -48,6 +70,9 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     }
 
+    /**
+     * Obsługa fizycznego przycisku powrotu.
+     */
     @Override
     public void onBackPressed(){
         startActivity(new Intent(MainActivity.this, MenuActivity.class));

@@ -4,12 +4,32 @@ package weronika.mathballs;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
+/**
+ * Główny wątek gry.
+ */
 public class Petla extends Thread{
+    /**
+     * Obiekt typu Gra
+     */
     public Gra gra;
+    /**
+     * Uchwyt do powierzchni, na której tworzona jest gra.
+     */
     public SurfaceHolder holder;
+    /**
+     * Płótno, na którym rysowana jest gra.
+     */
     public Canvas canvas;
+    /**
+     * Zmienna warunkująca działanie właściwej pętli gry.
+     */
     public boolean dziala;
 
+    /**
+     * Konstruktor klasy Petla inicjalizujący niektóre pola klasy
+     * @param gra
+     * @param holder
+     */
     public Petla(Gra gra, SurfaceHolder holder){
         super();
         this.gra=gra;
@@ -17,6 +37,10 @@ public class Petla extends Thread{
         dziala=true;
     }
 
+    /**
+     * Metoda inicjująca nowy wątek aplikacji.
+     * Uruchamia metody update oraz draw z klasy Gra 30 razy/s.
+     */
     @Override
     public void run(){
         long startTime;
@@ -33,11 +57,11 @@ public class Petla extends Thread{
             canvas = null;
 
             try {
-                canvas = this.holder.lockCanvas();
+                canvas = holder.lockCanvas();
                 synchronized (holder) {
 
-                    this.gra.update();
-                    this.gra.draw(canvas);
+                    gra.update();
+                    gra.draw(canvas);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
